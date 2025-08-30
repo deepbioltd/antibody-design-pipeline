@@ -4,21 +4,47 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   stub-run:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -euo pipefail {0}
     steps:
       - uses: actions/checkout@v4
-      - name: Install Java
+
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
-      - name: Install Nextflow
+
+      - name: Setup Nextflow
+        uses: nf-core/setup-nextflow@v2
+        with:
+          # Stable as of June/July 2025; pin to avoid surprises
+          version: '25.04.6'
+
+      - name: Print versions
         run: |
-          curl -s https://get.nextflow.io | bash
-          echo "$PWD" >> $GITHUB_PATH
+          java -version
+          nextflow -version
+
       - name: Smoke test (stub-run)
         run: |
-          ./nextflow run workflows/main.nf -stub-run -profile standard
-          test -f report/report.html
+          mkdir -p report
+          nextflow run workflows/main.nf \
+            -stub-run -profile standard \
+            -with-report report/report.html \
+            -with-trace -with-timeline
+          test -s report/report.html
+
+      - name: Upload stub report (artifact)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stub-report
+          path: report/report.html
