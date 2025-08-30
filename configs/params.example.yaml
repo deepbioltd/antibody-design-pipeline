@@ -1,0 +1,23 @@
+antigen: "data/antigen.pdb"
+heavy: "data/heavy.fasta"
+light: "data/light.fasta"
+hla_list: "data/hla_ii_common.txt"
+seed: 20250830
+
+md:
+  time_ns: 1
+  temperature_K: 310
+  ionic_strength_mM: 150
+
+mutscan:
+  regions: ["CDRH1","CDRH2","CDRH3","CDRL1","CDRL2","CDRL3"]
+  exclude_aas: ["C"]
+
+immunogenicity:
+  alleles: ["HLA-DRB1*01:01","HLA-DRB1*04:01","HLA-DRB1*07:01","HLA-DPB1*04:01"]
+
+weights:
+  mmgbsa: 0.45
+  ddg: 0.20
+  immunogenicity: 0.20
+  developability: 0.15

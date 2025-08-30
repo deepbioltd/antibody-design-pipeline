@@ -1,0 +1,6 @@
+name: general_env
+channels: [conda-forge, bioconda]
+dependencies:
+  - python=3.11
+  - biopython=1.83
+  - pandas=2.2.2

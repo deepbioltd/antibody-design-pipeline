@@ -1,0 +1,11 @@
+name: igfold_env
+channels: [conda-forge, bioconda, pytorch]
+dependencies:
+  - python=3.11
+  - pytorch=2.3.*
+  - biopython=1.83
+  - pip
+  - pip:
+      - igfold==0.4.2
+      - anarci==2020.04.23
+      - parapred==2.1.0

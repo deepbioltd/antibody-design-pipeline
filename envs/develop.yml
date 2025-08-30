@@ -1,0 +1,6 @@
+name: develop_env
+channels: [conda-forge, bioconda]
+dependencies:
+  - python=3.11
+  - pandas=2.2.2
+  - propka=3.5.1
